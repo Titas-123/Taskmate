@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <title>Register - Taskmate</title>
+{% endblock title %}
+
+{% block content %}
+    
+    <div class="container mt-4 ">
+        <form method="POST" class="mt-5 col-12">
+            {% csrf_token %}
+            <div id="c01" class="card" style="width: 35rem;margin:auto">
+                <div class="card-body">
+                    <h1 class=" text-center text-dark mb-5"><b>Register on Taskmate</b></h1>
+                    {{ regform|crispy}}
+                    <button class="btn btn-info mt-3 ">Submit</button>    
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    
+    
+{% endblock content %}

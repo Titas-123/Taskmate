@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Todo List - Edit your Taskmate</title>
+{% endblock title %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    {% endfor %}
+{% endif %}
+{% block content %}
+
+<div class="container mt-3">
+  {% if task_obj.manager == request.user %} 
+    <form method="POST">
+        <div class="input-group mb-3">
+            {% csrf_token %}
+                <input type="text" class="form-control col-lg-6" name="task" value="{{task_obj.task }}">
+                <input type="hidden" name="done" value="{{task_obj.done }}">
+                <button class="btn btn-outline-info" type="submit">Edit your task</button>
+        </div>
+    </form>
+  {% else %}  
+    <h1 class="display-2 text-center">Access Denied!</h1>
+  {% endif %}  
+</div>
+
+{% endblock %}

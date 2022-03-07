@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Todo List - Taskmate</title>
+{% endblock title %}
+
+{% block content %}
+    
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </symbol>
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </symbol>
+  </svg>
+  
+ <div class="container">
+
+
+      {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">   
+              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>{{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+    
+      {% else %}
+          {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>{{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+          {% endfor %}
+      {% endif %}
+
+      <form method="POST">
+        <div class="container input-group w-75 m-4 mb-5">
+          {% csrf_token %}
+          <label class="col-lg-4"></label>
+          <input type="text" class="form-control col-lg-6 " name="task" placeholder="New Task?">    
+            <button id="btn2" class="btn btn-primary">Add</button>
+        </div>
+
+      </form>
+  <div class="pb-3">
+    <div id="ca" class="card">
+    <div class="card-body shadow-lg ">
+      <h1 class="card-title text-black-50 text-center mb-4">YOUR TODO-LIST</h1>
+
+      <div class="d-flex flex-row align-items-center">  
+        <table class="table table-borderless">
+          <thead>
+          <tr class="row mb-3"> 
+            <th class="col-4 text-center">Task</th>
+            <th class="col-3 text-center">Activity</th>
+            <th class="col-2 text-center">Action</th>
+            <th class="col-3  text-center">Added at</th>
+
+          </tr> 
+          </thead>
+          <tbody>
+          {% if all_tasks %}
+          {% for i in all_tasks %} 
+            {% if i.done %}
+              <tr class="row">
+                <td class="col-4 text-center text-secondary"><del>{{ i.task }}</del></td>
+                <td class="col-3 text-center "><a class="btn btn-outline-warning" href="{% url 'complete_task' i.id %}">Mark as Pending</td>
+                <!-- <td class="col-1 text-center"><a class="btn btn-info" href="{% url 'update_task' i.id %}">Update</a></td>
+                <td class="col-1 text-center"><a class="btn btn-danger" href="{% url 'update_task' i.id %}">Delete</a></td> -->
+                <td class=" text-center col-2">
+                  <a href="{% url 'update_task' i.id %}" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-edit me-3"></i></a>
+                  <a href="{% url 'delete_task' i.id %}" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
+                </td>
+                <td class="col-3">{{i.created}}
+                </td> 
+
+              </tr>
+            {% else %}
+              <tr class="row">
+                <td class="col-4 text-center ">{{ i.task }}</td>
+                <td class=" text-center col-3"><a class="btn btn-outline-warning" id="a1" href="{% url 'complete_task' i.id %}">Mark as Done</td>
+                <!-- <td class=" text-center col-1"><a class="btn btn-info" href="{% url 'update_task' i.id %}">Update</a></td> -->
+                <!-- <td class=" text-center col-1"><a class="btn btn-danger" href="{% url 'delete_task' i.id %}">Delete</a></td> -->
+                <td class=" text-center col-2">
+                  <a href="{% url 'update_task' i.id %}" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-edit me-3"></i></a>
+                  <a href="{% url 'delete_task' i.id %}" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
+                </td>
+                <td class="col-3">{{i.created}}
+                </td> 
+              </tr>
+            {% endif %}  
+          {% endfor %} 
+          {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div> 
+
+        
+    </div>
+
+  </div>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-3 ms-4">
+      <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
+      {% if all_tasks.has_previous %}
+        <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.previous_page_number }}">{{all_tasks.previous_page_number}}</a></li>
+      {% endif %}
+      <li class="page-item active"><a class="page-link" href="?pg={{ all_tasks.number }}">{{ all_tasks.number }}</a></li>
+      {% if all_tasks.has_next %}
+        <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.next_page_number }}">{{all_tasks.next_page_number}}</a></li>
+      {% endif %}  
+      <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.paginator.num_pages }}">>></a></li>
+
+    </ul>
+  </nav> 
+      
+ </div> 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+{% endblock content %}

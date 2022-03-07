@@ -1,0 +1,57 @@
+{%extends 'base1.html'%}
+{% load static %}
+
+
+{% block title %}
+<title>Welcome to Taskmate</title>
+{% endblock %}
+
+
+{% block content %}
+  <div class="container ">
+    <div class="row mt-3">
+      <div class="col-md-10">
+        <b><h1 id="h1" class="display-4 mt-2 text-center">Create your daily todolists with TASKMATE</h1></b>
+      </div>   
+    </div>  
+    <div class="container"> 
+      <div class="row mt-5">
+        <div class="col-lg-4 col-sm-2">
+          <div id="c1" class="card shadow-lg" style="width: 18rem; ">
+            <img src="{% static 'images\9935-list.gif' %}" class="card-img-top" style=" width: auto; height: 230px;" alt="TODO">
+            <div class="card-body">
+              <h5 class="card-text">Create unlimited tasks for free!</>
+            </div>
+          </div>   
+        </div> 
+        <div class="col-lg-4">
+          <div id="c1"  class="card shadow-lg" style="width: 18rem;">
+            <img src="{% static 'images\41068-man-filling-a-list.gif' %}" class="card-img-top" style=" width: auto; height: 230px;" alt="TODO">
+            <div class="card-body">
+              <h5 class="card-text">Easily update or remove any task, any time.</h5>
+            </div>
+          </div>   
+        </div> 
+        <div class="col-lg-4">
+          <div id="c1"  class="card shadow-lg" style="width: 18rem;">
+            <img src="{% static 'images\92397-list.gif' %}" class="card-img-top" style=" width: auto; height: 230px;" alt="TODO">
+            <div class="card-body">
+              <h5 class="card-text">Keep your tasks secured by <a class="text-primary text-center" href="{% url 'register' %}">Creating an account.</a></>
+            </div>
+          </div>   
+        </div> 
+      </div>  
+    </div> 
+
+    <div class="row">
+      <div class="col-md-6 offset-md-4">
+        <a href="{% url 'todolist' %}"><button type="button" class="btn1 mt-4"><span>CREATE YOUR LIST NOW!</span></button></a>
+      </div>  
+    </div>   
+  </div> 
+ 
+
+
+</div> 
+  
+{% endblock %}

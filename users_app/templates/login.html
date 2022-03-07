@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    <title>Login - Taskmate</title>
+{% endblock title %}
+
+{% block content %}
+    
+    <div class="container mt-4 col-5" id="dc">
+        <form method="POST" class="mt-5 col-md-7">
+            {% csrf_token %}
+            <div class="card" id="cb" style="width: 35rem;">
+                <h1 class="text-center text-white"><b>Login</b></h1>
+                <div class="card-body">
+                    {{ form|crispy}}
+                    <button class="btn btn-warning mt-4" style="margin-left:30%; width:200px">Login</button>    
+                </div>
+            </div>    
+        </form>
+    </div>
+    
+{% endblock content %}
