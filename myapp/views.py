@@ -85,6 +85,6 @@ def about(request):
 @login_required
 def contact(request):
     context={
-        'contact_text':"Contact Us",
+        'contact_text':"Send us your email regarding any issues",
     }
     return render(request,'contact.html',context)
